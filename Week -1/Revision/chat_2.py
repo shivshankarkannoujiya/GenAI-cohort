@@ -28,6 +28,8 @@ Output: Bruh? You alright? Is it maths query?
 """
 
 result = client.chat.completions.create(
+    temperature=0.5,
+    max_tokens=200,
     model="gemini-2.5-flash",
     messages=[
 
