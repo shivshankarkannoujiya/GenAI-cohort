@@ -1,7 +1,9 @@
 import os
 import json
+import requests
 from dotenv import load_dotenv
 from openai import OpenAI
+
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -9,7 +11,13 @@ base_url = os.getenv("GEMINI_BASE_URL")
 
 
 def get_weather(city: str):
-    return "32 degree celcius"
+    print("Tool called get_weather:",city)
+    url = f"https://wttr.in/{city}?format=%C+%t"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return f"The weather in {city} is {response.text}"
+    return "Something went wrong"
 
 
 available_tools = {
