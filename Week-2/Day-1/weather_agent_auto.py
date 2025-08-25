@@ -4,6 +4,25 @@ import requests
 from dotenv import load_dotenv
 from openai import OpenAI
 
+"""
+--- REALTIME CHAT AGENT
+    - Google Search ki API's Availbale hai.
+    - Google_Search name ka tool bna de 
+    - Jisme Serach Query de and API use krke Search Krenge Internet pr.
+    - Jo result milega usko wapas return kr dunga
+    - We can ask anything to this agent
+    - Now it will have the internet access
+
+--  Building Chattiing Agent on our DB
+        def query_db(sql):
+            pass
+        
+--- STOCK MARKETING
+--- WEB SCRAPING AGENT
+--- LEETCODE STYLE TESTCASE GENERAATOR
+    - Input me function denge 
+    - On the basis of that generate the Testcase
+"""
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -18,6 +37,7 @@ def get_weather(city: str):
     if response.status_code == 200:
         return f"The weather in {city} is {response.text}"
     return "Something went wrong"
+
 
 
 available_tools = {
