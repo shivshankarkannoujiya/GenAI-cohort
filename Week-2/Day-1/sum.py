@@ -1,0 +1,1 @@
+"""def add_two_numbers(a, b):\n    return a + b\n\nif __name__ == '__main__':\n    number1 = 7\n    number2 = 3\n    result = add_two_numbers(number1, number2)\n    print(f\"The sum of {number1} and {number2} is: {result}\")""" 
