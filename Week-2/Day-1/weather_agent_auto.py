@@ -28,6 +28,14 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 base_url = os.getenv("GEMINI_BASE_URL")
 
+# IDEAS TO BUILD
+def run_command(command):
+    # Execute command on user systes
+    # return result
+    result = os.system(command=command)
+    return result
+    
+
 
 def get_weather(city: str):
     print("Tool called get_weather:", city)
@@ -39,12 +47,16 @@ def get_weather(city: str):
     return "Something went wrong"
 
 
-
 available_tools = {
     "get_weather": {
         "fn": get_weather,
         "description": "Takes a city name as input and returns the current weather for the city"
     },
+    
+    "run_command": {
+        "fn": run_command,
+        "description": "Take a command as input to execute on system and return output"
+    }
 }
 
 tools_description = "\n".join(
