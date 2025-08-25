@@ -11,7 +11,7 @@ base_url = os.getenv("GEMINI_BASE_URL")
 
 
 def get_weather(city: str):
-    print("Tool called get_weather:",city)
+    print("Tool called get_weather:", city)
     url = f"https://wttr.in/{city}?format=%C+%t"
     response = requests.get(url)
 
@@ -24,7 +24,7 @@ available_tools = {
     "get_weather": {
         "fn": get_weather,
         "description": "Takes a city name as input and returns the current weather for the city"
-    }
+    },
 }
 
 tools_description = "\n".join(
@@ -71,35 +71,36 @@ messages = [
     {"role": "system", "content": system_prompt},
 ]
 
-user_query = input("> ")
-messages.append({"role": "user", "content": user_query})
-
 while True:
-    response = client.chat.completions.create(
-        model="gemini-2.5-flash",
-        response_format={"type": "json_object"},
-        messages=messages
-    )
+    user_query = input("> ")
+    messages.append({"role": "user", "content": user_query})
 
-    parsed_output = json.loads(response.choices[0].message.content)
-    messages.append(
-        {"role": "assistant", "content": json.dumps(parsed_output)})
+    while True:
+        response = client.chat.completions.create(
+            model="gemini-2.5-flash",
+            response_format={"type": "json_object"},
+            messages=messages
+        )
 
-    if parsed_output.get("step") == "plan":
-        print(f"🧠: {parsed_output.get("content")}")
-        continue
+        parsed_output = json.loads(response.choices[0].message.content)
+        messages.append(
+            {"role": "assistant", "content": json.dumps(parsed_output)})
 
-    if parsed_output.get("step") == "action":
-        tool_name = parsed_output.get("function")
-        tool_input = parsed_output.get("input")
-
-        if available_tools.get(tool_name, False) != False:
-            output = available_tools[tool_name].get("fn")(tool_input)
-            messages.append({"role": "assistant", "content": json.dumps(
-                {"step": "observe", "output": output}
-            )})
+        if parsed_output.get("step") == "plan":
+            print(f"🧠: {parsed_output.get("content")}")
             continue
 
-    if parsed_output.get("step") == "output":
-        print(f"🤖: {parsed_output.get("content")}")
-        break
+        if parsed_output.get("step") == "action":
+            tool_name = parsed_output.get("function")
+            tool_input = parsed_output.get("input")
+
+            if available_tools.get(tool_name, False) != False:
+                output = available_tools[tool_name].get("fn")(tool_input)
+                messages.append({"role": "assistant", "content": json.dumps(
+                    {"step": "observe", "output": output}
+                )})
+                continue
+
+        if parsed_output.get("step") == "output":
+            print(f"🤖: {parsed_output.get("content")}")
+            break
