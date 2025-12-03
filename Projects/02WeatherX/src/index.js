@@ -3,7 +3,8 @@ import { ENV } from './config/env.js';
 import readlineSync from 'readline-sync';
 
 const client = new OpenAI({
-    apiKey: ENV.OPENAI_API_KEY,
+    apiKey: ENV.GEMINI_API_KEY,
+    baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
 });
 
 function getWeatherDetails(city = '') {
@@ -58,7 +59,7 @@ while (true) {
 
     while (true) {
         const chat = await client.chat.completions.create({
-            model: 'gpt-4.1-mini',
+            model: 'gemini-2.5-flash-live',
             messages: messages,
             response_format: { type: 'json_object' },
         });
