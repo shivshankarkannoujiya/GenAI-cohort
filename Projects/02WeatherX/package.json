@@ -1,0 +1,11 @@
+{
+	"type": "module",
+	"dependencies": {
+		"dotenv": "^17.2.3",
+		"openai": "^6.9.1",
+		"readline-sync": "^1.4.10"
+	},
+	"devDependencies": {
+		"prettier": "^3.7.3"
+	}
+}
